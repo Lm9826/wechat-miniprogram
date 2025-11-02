@@ -1,0 +1,12 @@
+{
+  "name": "love-diary",
+  "version": "1.0.0",
+  "description": "A WeChat mini program for love diary",
+  "main": "app.js",
+  "scripts": {
+    "dev": "wechat-miniprogram dev"
+  },
+  "keywords": ["wechat", "mini-program", "love", "diary"],
+  "author": "",
+  "license": "MIT"
+}

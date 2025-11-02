@@ -4,7 +4,9 @@
     "pages/diary/diary",
     "pages/discover/discover",
     "pages/profile/profile",
-    "pages/countdown/countdown"
+    "pages/countdown/countdown",
+    "pages/aiAssistant/aiAssistant",
+    "pages/tree/tree"
   ],
   "window": {
     "navigationBarTextStyle": "white",

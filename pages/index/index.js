@@ -307,9 +307,9 @@ Page({
         wx.switchTab({
           url: '/pages/diary/diary'
         })
-      } else if (feature.route === '/pages/countdown/countdown') {
+      } else if (feature.route === '/pages/countdown/countdown' || feature.route === '/pages/tree/tree') {
         wx.navigateTo({
-          url: '/pages/countdown/countdown'
+          url: feature.route
         })
       } else {
         wx.showToast({
@@ -364,29 +364,7 @@ Page({
     })
   },
 
-  // 测试推送
-  async testPush() {
-    try {
-      const result = await pushService.sendDailyReminder()
-      if (result.success) {
-        wx.showToast({
-          title: '推送成功',
-          icon: 'success'
-        })
-      } else {
-        wx.showToast({
-          title: result.message,
-          icon: 'none'
-        })
-      }
-    } catch (error) {
-      console.error('推送错误:', error)
-      wx.showToast({
-        title: error.message || '推送失败',
-        icon: 'none'
-      })
-    }
-  },
+
 
   // 取消订阅
   unsubscribeDailyPush() {
@@ -744,195 +722,11 @@ Page({
     this.getWeatherInfo(true) // 强制刷新
   },
 
-  // 测试天气API
-  async testWeatherAPI() {
-    try {
-      // 先检查网络状态
-      const networkType = await this.getNetworkType()
-      console.log('当前网络类型:', networkType)
 
-      const result = await WeatherService.testWeatherAPI('北京')
-      console.log('API测试结果:', result)
 
-      if (result.success) {
-        wx.showToast({
-          title: 'API连接正常',
-          icon: 'success'
-        })
-      } else {
-        let errorContent = 'API连接失败'
-        if (result.error) {
-          if (result.error.message) {
-            errorContent = result.error.message
-          } else if (typeof result.error === 'string') {
-            errorContent = result.error
-          } else {
-            errorContent = JSON.stringify(result.error)
-          }
-        }
 
-        // 添加网络状态信息
-        if (networkType !== 'wifi' && networkType !== 'unknown') {
-          errorContent += `\n\n当前网络: ${networkType}`
-        }
 
-        // 添加域名配置提示
-        if (result.error && result.error.code === '403') {
-          errorContent += '\n\n可能的解决方案：\n1. 检查API密钥是否正确\n2. 确认小程序已配置域名白名单\n3. 检查API密钥是否已激活'
-        }
 
-        wx.showModal({
-          title: 'API测试结果',
-          content: errorContent,
-          showCancel: false
-        })
-      }
-    } catch (error) {
-      console.error('API测试失败:', error)
-      wx.showToast({
-        title: 'API测试失败',
-        icon: 'none'
-      })
-    }
-  },
-
-  // 诊断API密钥
-  async diagnoseAPI() {
-    try {
-      wx.showLoading({
-        title: '诊断中...'
-      })
-
-      // 检查网络权限
-      const networkType = await this.getNetworkType()
-
-      const diagnosis = await WeatherService.diagnoseAPIKey()
-      console.log('API诊断结果:', diagnosis)
-
-      wx.hideLoading()
-
-      let content = `API密钥诊断结果：\n\n`
-      content += `密钥长度: ${diagnosis.keyLength}位\n`
-      content += `密钥格式: ${diagnosis.keyFormat}\n\n`
-
-      content += `网络状态：\n`
-      content += `类型: ${networkType}\n\n`
-
-      if (diagnosis.networkTest) {
-        content += `网络连接测试：\n`
-        content += `结果: ${diagnosis.networkTest.success ? '成功' : '失败'}\n`
-        if (diagnosis.networkTest.statusCode) {
-          content += `状态码: ${diagnosis.networkTest.statusCode}\n`
-        }
-        if (diagnosis.networkTest.error) {
-          content += `错误: ${diagnosis.networkTest.error}\n`
-        }
-        content += `\n`
-      }
-
-      if (diagnosis.testResults) {
-        content += `API测试结果：\n`
-        diagnosis.testResults.forEach((result, index) => {
-          content += `${index + 1}. ${result.endpoint}\n`
-          content += `   状态码: ${result.statusCode}\n`
-          content += `   结果: ${result.success ? '成功' : '失败'}`
-          if (result.error) {
-            content += `\n   错误: ${result.error}`
-          }
-          if (result.data && result.data.code) {
-            content += `\n   返回码: ${result.data.code}`
-            if (result.data.message) {
-              content += `\n   消息: ${result.data.message}`
-            }
-          }
-          content += `\n\n`
-        })
-      }
-
-      // 添加建议
-      if (diagnosis.networkTest && !diagnosis.networkTest.success) {
-        content += `\n建议：\n`
-        content += `1. 检查网络连接\n`
-        content += `2. 确认小程序有网络权限\n`
-        content += `3. 检查域名白名单配置\n`
-      } else if (diagnosis.testResults && diagnosis.testResults.every(r => !r.success)) {
-        content += `\n建议：\n`
-        content += `1. 检查API密钥是否正确\n`
-        content += `2. 确认API密钥已激活\n`
-        content += `3. 检查API调用权限\n`
-        content += `4. 联系和风天气客服\n`
-      }
-
-      wx.showModal({
-        title: 'API诊断结果',
-        content: content,
-        showCancel: false
-      })
-    } catch (error) {
-      wx.hideLoading()
-      console.error('API诊断失败:', error)
-      wx.showToast({
-        title: '诊断失败',
-        icon: 'none'
-      })
-    }
-  },
-
-  // 获取网络类型
-  async getNetworkType() {
-    try {
-      const networkType = await wx.getNetworkType()
-      return networkType.networkType
-    } catch (error) {
-      console.error('获取网络类型失败:', error)
-      return 'unknown'
-    }
-  },
-
-  // 选择城市（电脑端使用）
-  selectCity() {
-    const cities = [
-      { name: '北京', latitude: 39.9042, longitude: 116.4074, district: '朝阳区', province: '北京市' },
-      { name: '上海', latitude: 31.2304, longitude: 121.4737, district: '浦东新区', province: '上海市' },
-      { name: '广州', latitude: 23.1291, longitude: 113.2644, district: '天河区', province: '广东省' },
-      { name: '深圳', latitude: 22.5431, longitude: 114.0579, district: '南山区', province: '广东省' },
-      { name: '杭州', latitude: 30.2741, longitude: 120.1551, district: '西湖区', province: '浙江省' }
-    ]
-
-    wx.showActionSheet({
-      itemList: cities.map(city => city.name),
-      success: (res) => {
-        const selectedCity = cities[res.tapIndex]
-        this.setData({
-          userLocation: {
-            city: selectedCity.name,
-            district: selectedCity.district,
-            province: selectedCity.province,
-            latitude: selectedCity.latitude,
-            longitude: selectedCity.longitude
-          }
-        })
-
-        // 保存位置信息到本地存储
-        wx.setStorageSync('userLocation', {
-          city: selectedCity.name,
-          district: selectedCity.district,
-          province: selectedCity.province,
-          latitude: selectedCity.latitude,
-          longitude: selectedCity.longitude,
-          timestamp: Date.now()
-        })
-
-        // 获取天气信息
-        this.getWeatherInfo(true)
-
-        wx.showToast({
-          title: `已选择${selectedCity.name}`,
-          icon: 'success'
-        })
-      }
-    })
-  },
 
 
 })

@@ -1,0 +1,71 @@
+<!-- pages/tree/tree.wxml -->
+<view class="tree-container">
+  <!-- 顶部信息栏 -->
+  <view class="top-bar">
+    <view class="energy-info">
+      <text class="energy-label">当前能量</text>
+      <view class="energy-value">
+        <text class="energy-number">{{currentEnergy}}</text>
+        <text class="energy-unit">g</text>
+      </view>
+    </view>
+    <view class="growth-info">
+      <text class="growth-label">生长进度</text>
+      <view class="growth-bar">
+        <view class="growth-progress" style="width: {{growthProgress}}%"></view>
+      </view>
+      <text class="growth-text">{{growthProgress}}%</text>
+    </view>
+  </view>
+
+  <!-- 树木展示区 -->
+  <view class="tree-display">
+    <view class="tree-stage-{{treeStage}}">
+      <!-- 土壤 -->
+      <view class="soil"></view>
+      <!-- 树干 -->
+      <view class="trunk"></view>
+      <!-- 树冠 -->
+      <view class="canopy">
+        <view class="leaves leaves-1"></view>
+        <view class="leaves leaves-2"></view>
+        <view class="leaves leaves-3"></view>
+        <view class="leaves leaves-4"></view>
+      </view>
+      <!-- 爱心装饰 -->
+      <view class="hearts">
+        <view class="heart heart-1"></view>
+        <view class="heart heart-2"></view>
+        <view class="heart heart-3"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 互动按钮区 -->
+  <view class="action-buttons">
+    <button class="collect-btn" bindtap="collectEnergy" wx:if="{{canCollect}}">
+      <text class="btn-icon">💧</text>
+      <text class="btn-text">收集能量</text>
+    </button>
+    <button class="collect-btn disabled" wx:else>
+      <text class="btn-icon">⏰</text>
+      <text class="btn-text">下次收集: {{nextCollectTime}}</text>
+    </button>
+    <button class="water-btn" bindtap="waterTree" disabled="{{currentEnergy < 10}}">
+      <text class="btn-icon">💧</text>
+      <text class="btn-text">浇水 (10g)</text>
+    </button>
+  </view>
+
+  <!-- 生长日志 -->
+  <view class="growth-log">
+    <text class="log-title">生长日志</text>
+    <view class="log-list">
+      <view class="log-item" wx:for="{{growthLogs}}" wx:key="id">
+        <text class="log-icon">🌱</text>
+        <text class="log-content">{{item.content}}</text>
+        <text class="log-time">{{item.time}}</text>
+      </view>
+    </view>
+  </view>
+</view>

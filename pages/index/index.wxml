@@ -154,18 +154,7 @@
         </view>
       </view>
 
-      <!-- 测试按钮区域 -->
-      <view class="test-section" wx:if="{{dailyPushSubscribed}}">
-        <button class="test-push-btn" bindtap="testPush">
-          测试推送
-        </button>
-        <button class="test-api-btn" bindtap="testWeatherAPI">
-          测试API
-        </button>
-        <button class="diagnose-api-btn" bindtap="diagnoseAPI">
-          诊断API
-        </button>
-      </view>
+
     </view>
     
     <!-- 恋爱天数 -->

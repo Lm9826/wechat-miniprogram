@@ -1,0 +1,21 @@
+<view class="ai-assistant-container">
+  <view class="chat-header">
+    <text class="header-title">AI智能助手</text>
+  </view>
+  
+  <scroll-view class="chat-messages" scroll-y="true" scroll-top="{{scrollTop}}">
+    <view class="message" wx:for="{{messages}}" wx:key="id">
+      <view class="message-content" wx:if="{{item.sender === 'user'}}" style="background-color: #ff69b4; color: white; align-self: flex-end;">
+        {{item.content}}
+      </view>
+      <view class="message-content" wx:else style="background-color: #f0f0f0; color: black; align-self: flex-start;">
+        {{item.content}}
+      </view>
+    </view>
+  </scroll-view>
+  
+  <view class="input-container">
+    <input class="input-box" placeholder="输入你的问题..." bindinput="onInput" value="{{inputValue}}" />
+    <button class="send-btn" bindtap="sendMessage">发送</button>
+  </view>
+</view>

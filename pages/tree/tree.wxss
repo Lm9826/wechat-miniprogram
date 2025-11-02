@@ -1,0 +1,406 @@
+/* pages/tree/tree.wxss */
+.tree-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-bar {
+  width: 100%;
+  max-width: 600rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.energy-info {
+  margin-bottom: 30rpx;
+}
+
+.energy-label {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.energy-value {
+  display: flex;
+  align-items: baseline;
+}
+
+.energy-number {
+  font-size: 64rpx;
+  font-weight: bold;
+  color: #ff6b6b;
+  margin-right: 10rpx;
+}
+
+.energy-unit {
+  font-size: 32rpx;
+  color: #999;
+}
+
+.growth-info {
+  margin-top: 30rpx;
+}
+
+.growth-label {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.growth-bar {
+  width: 100%;
+  height: 20rpx;
+  background: #e0e0e0;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin-bottom: 10rpx;
+}
+
+.growth-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 10rpx;
+  transition: width 0.5s ease;
+}
+
+.growth-text {
+  font-size: 24rpx;
+  color: #666;
+  text-align: right;
+}
+
+.tree-display {
+  width: 100%;
+  max-width: 600rpx;
+  height: 500rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 树木不同阶段样式 */
+.tree-stage-1 .trunk {
+  width: 30rpx;
+  height: 100rpx;
+  background: linear-gradient(90deg, #8B4513 0%, #654321 100%);
+  border-radius: 15rpx 15rpx 0 0;
+  position: absolute;
+  bottom: 100rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.5s ease;
+}
+
+.tree-stage-2 .trunk {
+  width: 40rpx;
+  height: 150rpx;
+}
+
+.tree-stage-3 .trunk {
+  width: 50rpx;
+  height: 200rpx;
+}
+
+.tree-stage-1 .canopy {
+  position: absolute;
+  bottom: 200rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.5s ease;
+}
+
+.tree-stage-2 .canopy {
+  bottom: 250rpx;
+}
+
+.tree-stage-3 .canopy {
+  bottom: 300rpx;
+}
+
+.leaves {
+  width: 80rpx;
+  height: 80rpx;
+  background: radial-gradient(circle, #4CAF50 0%, #2E7D32 100%);
+  border-radius: 50%;
+  position: absolute;
+  animation: leafFloat 3s ease-in-out infinite;
+}
+
+.tree-stage-1 .leaves {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.tree-stage-3 .leaves {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.leaves-1 {
+  top: 0;
+  left: -40rpx;
+  animation-delay: 0s;
+}
+
+.leaves-2 {
+  top: -30rpx;
+  left: 0;
+  animation-delay: 0.5s;
+}
+
+.leaves-3 {
+  top: 0;
+  left: 40rpx;
+  animation-delay: 1s;
+}
+
+.leaves-4 {
+  top: 30rpx;
+  left: 0;
+  animation-delay: 1.5s;
+}
+
+.soil {
+  width: 200rpx;
+  height: 60rpx;
+  background: linear-gradient(90deg, #8B4513 0%, #654321 100%);
+  border-radius: 30rpx;
+  position: absolute;
+  bottom: 40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.heart {
+  width: 30rpx;
+  height: 30rpx;
+  background: radial-gradient(circle, #ff6b6b 0%, #ee5a6f 100%);
+  position: absolute;
+  border-radius: 50% 50% 0 50%;
+  transform: rotate(-45deg);
+  animation: heartFloat 3s ease-in-out infinite;
+}
+
+.heart-1 {
+  top: 200rpx;
+  left: 200rpx;
+  animation-delay: 0s;
+}
+
+.heart-2 {
+  top: 150rpx;
+  right: 200rpx;
+  animation-delay: 1s;
+}
+
+.heart-3 {
+  top: 250rpx;
+  left: 300rpx;
+  animation-delay: 2s;
+}
+
+/* 互动按钮区 */
+.action-buttons {
+  width: 100%;
+  max-width: 600rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.collect-btn, .water-btn {
+  width: 100%;
+  height: 100rpx;
+  border: none;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+  box-shadow: 0 5rpx 15rpx rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.collect-btn:active, .water-btn:active {
+  transform: scale(0.95);
+}
+
+.collect-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+}
+
+.collect-btn.disabled {
+  background: #ccc;
+  color: #666;
+  pointer-events: none;
+}
+
+.water-btn {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.water-btn:disabled {
+  background: #ccc;
+  color: #666;
+}
+
+.btn-icon {
+  font-size: 40rpx;
+}
+
+.btn-text {
+  font-size: 32rpx;
+}
+
+/* 生长日志 */
+.growth-log {
+  width: 100%;
+  max-width: 600rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.log-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.log-list {
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.log-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-icon {
+  font-size: 32rpx;
+  margin-top: 5rpx;
+}
+
+.log-content {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
+.log-time {
+  font-size: 24rpx;
+  color: #999;
+  white-space: nowrap;
+}
+
+/* 动画效果 */
+@keyframes leafFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+}
+
+@keyframes heartFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(-45deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-30px) rotate(-45deg) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* 收集能量动画 */
+@keyframes collectEnergy {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.collecting {
+  animation: collectEnergy 0.5s ease;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .tree-container {
+    padding: 10rpx;
+  }
+  
+  .tree-display {
+    height: 400rpx;
+  }
+  
+  .action-buttons {
+    gap: 15rpx;
+  }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8rpx;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4rpx;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4rpx;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

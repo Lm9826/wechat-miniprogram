@@ -29,6 +29,13 @@ Page({
                 subtitle: '一起实现的小目标',
                 icon: '⭐',
                 color: '#4834d4'
+            },
+            {
+                id: 5,
+                title: 'AI智能助手',
+                subtitle: '你的专属恋爱顾问',
+                icon: '🤖',
+                color: '#00d4ff'
             }
         ]
     },
@@ -40,9 +47,24 @@ Page({
     // 点击功能卡片
     onFeatureClick(e) {
         const featureId = e.currentTarget.dataset.id
-        wx.showToast({
-            title: '功能开发中',
-            icon: 'none'
-        })
+        
+        switch (featureId) {
+            case 1:
+                wx.navigateTo({
+                    url: '/pages/countdown/countdown'
+                })
+                break
+            case 5:
+                wx.navigateTo({
+                    url: '/pages/aiAssistant/aiAssistant'
+                })
+                break
+            default:
+                wx.showToast({
+                    title: '功能开发中',
+                    icon: 'none'
+                })
+                break
+        }
     }
 })

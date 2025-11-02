@@ -1,0 +1,72 @@
+.ai-assistant-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.chat-header {
+  padding: 20rpx;
+  background-color: #ff69b4;
+  color: white;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20rpx;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 15rpx;
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 15rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.input-container {
+  display: flex;
+  padding: 20rpx;
+  background-color: white;
+  border-top: 1rpx solid #eee;
+}
+
+.input-box {
+  flex: 1;
+  height: 60rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+  margin-right: 15rpx;
+}
+
+.send-btn {
+  width: 120rpx;
+  height: 60rpx;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send-btn:active {
+  background-color: #ff1493;
+}

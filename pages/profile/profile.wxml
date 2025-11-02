@@ -1,0 +1,31 @@
+<!--profile.wxml-->
+<view class="profile-container">
+  <view class="header">
+    <view class="user-info" bindtap="editProfile">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view class="user-details">
+        <text class="nickname">{{userInfo.nickName}}</text>
+        <text class="edit-tip">点击编辑个人信息</text>
+      </view>
+      <text class="edit-arrow">></text>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-item" 
+          wx:for="{{menuItems}}" 
+          wx:key="id" 
+          bindtap="onMenuClick" 
+          data-id="{{item.id}}">
+      <view class="menu-left">
+        <text class="menu-icon">{{item.icon}}</text>
+        <text class="menu-title">{{item.title}}</text>
+      </view>
+      <text class="menu-arrow" wx:if="{{item.arrow}}">></text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="version">版本 1.0.0</text>
+  </view>
+</view>

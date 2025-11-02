@@ -1,0 +1,63 @@
+<!--diary.wxml-->
+<view class="diary-container">
+  <view class="header">
+    <text class="title">写日记</text>
+    <text class="subtitle">用照片记录美好瞬间</text>
+  </view>
+
+  <!-- 今天的消息 -->
+  <view class="today-message-section">
+    <view class="today-message-header">
+      <text class="today-title">📝 今天的消息</text>
+      <text class="today-date">{{todayMessage ? '已设置' : '未设置'}}</text>
+    </view>
+    
+    <view class="today-message-content" wx:if="{{todayMessage}}">
+      <text class="message-text">{{todayMessage}}</text>
+    </view>
+    
+    <view class="today-message-actions">
+      <button class="message-btn" bindtap="showAddMessageModal">
+        {{todayMessage ? '修改消息' : '添加消息'}}
+      </button>
+    </view>
+  </view>
+
+  <view class="add-diary-btn" bindtap="addDiary">
+    <text class="add-icon">+</text>
+    <text class="add-text">写下今天的心情</text>
+  </view>
+
+  <view class="diary-list">
+    <view class="diary-item" wx:for="{{diaryList}}" wx:key="id" bindtap="viewDiary" data-id="{{item.id}}">
+      <view class="diary-date">{{item.date}}</view>
+      <view class="diary-content">
+        <view class="diary-title">{{item.title}}</view>
+        <view class="diary-text">{{item.content}}</view>
+      </view>
+      <view class="diary-mood {{item.mood}}"></view>
+    </view>
+  </view>
+
+  <!-- 添加消息弹窗 -->
+  <view class="message-modal" wx:if="{{showAddMessage}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">设置今天的消息</text>
+        <text class="modal-close" bindtap="hideAddMessageModal">×</text>
+      </view>
+      <view class="modal-body">
+        <textarea class="message-input" 
+                  placeholder="写下今天想说的话，会在推送中显示..."
+                  value="{{todayMessage}}"
+                  bindinput="onMessageInput"
+                  maxlength="200"></textarea>
+        <text class="input-tip">这条消息会在每日推送中显示给您的伴侣</text>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="hideAddMessageModal">取消</button>
+        <button class="modal-btn confirm" bindtap="saveTodayMessage">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

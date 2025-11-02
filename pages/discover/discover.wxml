@@ -1,0 +1,26 @@
+<!--discover.wxml-->
+<view class="discover-container">
+  <view class="header">
+    <text class="title">发现</text>
+    <text class="subtitle">探索更多有趣的功能</text>
+  </view>
+
+  <view class="features-grid">
+    <view class="feature-item" 
+          wx:for="{{features}}" 
+          wx:key="id" 
+          bindtap="onFeatureClick" 
+          data-id="{{item.id}}"
+          style="background: linear-gradient(135deg, {{item.color}}, {{item.color}}88);">
+      <view class="feature-icon">{{item.icon}}</view>
+      <view class="feature-content">
+        <view class="feature-title">{{item.title}}</view>
+        <view class="feature-subtitle">{{item.subtitle}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tips">
+    <text class="tips-text">💡 更多功能正在开发中，敬请期待</text>
+  </view>
+</view>

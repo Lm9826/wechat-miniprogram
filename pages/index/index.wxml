@@ -1,0 +1,226 @@
+<!--index.wxml-->
+<view class="page-container">
+  <!-- 背景图片 -->
+  <image class="background-image" src="/images/background.jpg" mode="aspectFill"></image>
+  
+  <scroll-view class="scroll-container" scroll-y="true" enable-flex="true">
+  <view class="container">
+  <!-- 自定义返回按钮 -->
+  <view class="custom-nav">
+    <view class="back-button" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+  </view>
+  
+  <!-- 头部区域 -->
+  <view class="header">
+    <text class="title">恋爱日记</text>
+    
+    <!-- 用户头像区域 -->
+    <view class="avatars-section">
+      <!-- 用户1头像 - 使用新的微信头像选择 -->
+      <view class="avatar-container">
+        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseUser1Avatar">
+          <image class="avatar" src="{{userAvatars[0]}}" mode="aspectFill"></image>
+        </button>
+        <view class="avatar-edit">选择头像</view>
+      </view>
+      
+      <view class="plus-icon">+</view>
+      
+      <!-- 用户2头像 - 手动选择 -->
+      <view class="avatar-container">
+        <image class="avatar" src="{{userAvatars[1]}}" mode="aspectFill" bindtap="chooseUser2Avatar"></image>
+        <view class="avatar-edit">选择头像</view>
+      </view>
+    </view>
+
+    <!-- 昵称输入区域 -->
+    <view class="nicknames-section">
+      <input type="nickname" class="nickname-input" placeholder="微信用户" 
+             value="{{userInfo1.nickName}}" bind:change="onUser1NickNameChange" />
+      <input type="nickname" class="nickname-input" placeholder="TA" 
+             value="{{userInfo2.nickName}}" bind:change="onUser2NickNameChange" />
+    </view>
+
+    <!-- 说明文字 -->
+    <view class="tips-section">
+      <text class="tips-text">💡 点击头像选择照片，输入框可填写昵称</text>
+    </view>
+
+    <!-- 每日推送订阅 -->
+    <view class="push-subscribe-section">
+      <view class="subscribe-card">
+        <view class="subscribe-content">
+          <text class="subscribe-title">每日早安推送</text>
+          <text class="subscribe-desc">使用Server酱推送每日提醒</text>
+        </view>
+        <button class="subscribe-btn {{dailyPushSubscribed ? 'subscribed' : ''}}" 
+                bindtap="{{dailyPushSubscribed ? 'unsubscribeDailyPush' : 'showSendKeyInput'}}">
+          {{dailyPushSubscribed ? '已订阅' : '设置'}}
+        </button>
+      </view>
+      
+      <!-- SendKey输入弹窗 -->
+      <view class="sendkey-modal" wx:if="{{showSendKeyInput}}">
+        <view class="modal-content">
+          <view class="modal-header">
+            <text class="modal-title">设置推送</text>
+            <text class="modal-close" bindtap="hideSendKeyInput">×</text>
+          </view>
+          <view class="modal-body">
+            <text class="input-label">请输入Server酱SendKey：</text>
+            <input class="sendkey-input" 
+                   placeholder="请输入您的SendKey" 
+                   value="{{sendKey}}"
+                   bindinput="onSendKeyInput" />
+            <text class="input-tip">请前往 https://sct.ftqq.com 注册获取SendKey</text>
+          </view>
+          <view class="modal-footer">
+            <button class="modal-btn cancel" bindtap="hideSendKeyInput">取消</button>
+            <button class="modal-btn confirm" bindtap="saveSendKey">保存</button>
+          </view>
+        </view>
+      </view>
+      
+            <!-- 位置和天气信息显示 -->
+      <view class="location-section" wx:if="{{dailyPushSubscribed}}">
+        <view class="location-card">
+          <view class="location-content">
+            <text class="location-title">当前位置</text>
+            <text class="location-info">{{userLocation.city}}</text>
+            <text class="location-detail" wx:if="{{userLocation.district}}">{{userLocation.district}}, {{userLocation.province}}</text>
+          </view>
+          <view class="location-buttons">
+            <button class="location-btn" bindtap="refreshLocation" disabled="{{locationLoading}}">
+              {{locationLoading ? '获取中...' : '刷新位置'}}
+            </button>
+            <button class="location-btn select-city-btn" bindtap="selectCity">
+              选择城市
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <!-- 天气信息显示 -->
+      <view class="weather-section" wx:if="{{dailyPushSubscribed}}">
+        <view class="weather-card">
+          <view class="weather-header">
+            <text class="weather-title">今日天气</text>
+            <button class="weather-refresh-btn" bindtap="refreshWeather" disabled="{{weatherLoading}}">
+              {{weatherLoading ? '获取中...' : '刷新'}}
+            </button>
+          </view>
+          <view class="weather-content" wx:if="{{weatherInfo.temperature}}">
+            <view class="weather-main">
+              <text class="weather-icon">{{weatherInfo.icon}}</text>
+              <view class="weather-temp-info">
+                <text class="weather-temp">{{weatherInfo.temperature}}°C</text>
+                <text class="weather-condition">{{weatherInfo.condition}}</text>
+              </view>
+            </view>
+            <view class="weather-details">
+              <view class="weather-detail-item">
+                <text class="detail-label">湿度</text>
+                <text class="detail-value">{{weatherInfo.humidity}}%</text>
+              </view>
+              <view class="weather-detail-item">
+                <text class="detail-label">风速</text>
+                <text class="detail-value">{{weatherInfo.windSpeed}}km/h</text>
+              </view>
+              <view class="weather-detail-item">
+                <text class="detail-label">风向</text>
+                <text class="detail-value">{{weatherInfo.windDir}}</text>
+              </view>
+            </view>
+            <view class="weather-details" wx:if="{{weatherInfo.feelsLike || weatherInfo.pressure || weatherInfo.visibility}}">
+              <view class="weather-detail-item" wx:if="{{weatherInfo.feelsLike}}">
+                <text class="detail-label">体感温度</text>
+                <text class="detail-value">{{weatherInfo.feelsLike}}°C</text>
+              </view>
+              <view class="weather-detail-item" wx:if="{{weatherInfo.pressure}}">
+                <text class="detail-label">气压</text>
+                <text class="detail-value">{{weatherInfo.pressure}}hPa</text>
+              </view>
+              <view class="weather-detail-item" wx:if="{{weatherInfo.visibility}}">
+                <text class="detail-label">能见度</text>
+                <text class="detail-value">{{weatherInfo.visibility}}km</text>
+              </view>
+            </view>
+          </view>
+          <view class="weather-loading" wx:else>
+            <text class="loading-text">{{weatherLoading ? '获取天气中...' : '暂无天气信息'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 测试按钮区域 -->
+      <view class="test-section" wx:if="{{dailyPushSubscribed}}">
+        <button class="test-push-btn" bindtap="testPush">
+          测试推送
+        </button>
+        <button class="test-api-btn" bindtap="testWeatherAPI">
+          测试API
+        </button>
+        <button class="diagnose-api-btn" bindtap="diagnoseAPI">
+          诊断API
+        </button>
+      </view>
+    </view>
+    
+    <!-- 恋爱天数 -->
+    <view class="love-days">
+      <text class="days-text">在一起已经</text> 
+      <text class="days-number">{{loveDays}}</text>
+      <text class="days-unit">天</text>
+    </view>
+  </view>
+
+  <!-- 功能卡片区域 -->
+  <view class="features-section">
+    <!-- 左侧大卡片 -->
+    <view class="feature-large" 
+          bindtap="onFeatureClick" 
+          data-id="{{features[0].id}}"
+          style="background: {{features[0].bgColor}}">
+      <view class="feature-icon">{{features[0].icon}}</view>
+      <view class="feature-content">
+        <text class="feature-title">{{features[0].title}}</text>
+        <text class="feature-subtitle">{{features[0].subtitle}}</text>
+      </view>
+    </view>
+    
+    <!-- 右侧卡片组 -->
+    <view class="features-right">
+      <view class="feature-small" 
+            wx:for="{{features}}" 
+            wx:for-index="idx"
+            wx:key="id" 
+            wx:if="{{idx > 0 && idx < 3}}"
+            bindtap="onFeatureClick" 
+            data-id="{{item.id}}"
+            style="background: {{item.bgColor}}">
+        <view class="small-title">{{item.title}}</view>
+        <view class="small-subtitle">{{item.subtitle}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部卡片行 -->
+  <view class="features-bottom">
+    <view class="feature-bottom" 
+          wx:for="{{features}}" 
+          wx:for-index="idx"
+          wx:key="id" 
+          wx:if="{{idx >= 3}}"
+          bindtap="onFeatureClick" 
+          data-id="{{item.id}}"
+          style="background: {{item.bgColor}}">
+      <view class="bottom-title">{{item.title}}</view>
+      <view class="bottom-subtitle">{{item.subtitle}}</view>
+    </view>
+  </view>
+</view>
+</scroll-view>
+</view>
+

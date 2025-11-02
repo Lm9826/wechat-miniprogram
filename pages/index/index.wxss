@@ -1,0 +1,697 @@
+/**index.wxss**/
+page {
+  height: 100vh;
+}
+
+.page-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.scroll-container {
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* 自定义导航栏 */
+.custom-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88rpx; /* 状态栏 + 导航栏高度 */
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 10rpx;
+  padding-left: 20rpx;
+}
+
+.back-button {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(10rpx);
+}
+
+.back-icon {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.container {
+  min-height: 100vh;
+  padding: 128rpx 40rpx 140rpx 40rpx; /* 顶部增加空间给自定义导航栏 */
+  box-sizing: border-box;
+}
+
+/* 头部区域 */
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 40rpx;
+  display: block;
+}
+
+.avatars-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+  gap: 15rpx; /* 设置更紧凑的间距 */
+  margin-left: 30rpx; /* 整体向右移动 */
+}
+
+.avatar-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0; /* 防止压缩 */
+  width: 100rpx; /* 限制容器宽度 */
+}
+
+.avatar-wrapper {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100rpx; /* 限制按钮宽度 */
+  height: 100rpx; /* 限制按钮高度 */
+  border-radius: 50%; /* 按钮也设为圆形 */
+  overflow: visible; /* 允许边框显示 */
+  display: block; /* 改回block布局 */
+}
+
+.avatar-wrapper::after {
+  border: none;
+  content: none;
+}
+
+.avatar-wrapper::before {
+  border: none;
+  content: none;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
+  display: block;
+  box-sizing: border-box; /* 确保边框不影响尺寸 */
+}
+
+.avatar-container:active .avatar {
+  transform: scale(0.95);
+}
+
+.avatar-edit {
+  font-size: 20rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 10rpx;
+  text-align: center;
+}
+
+/* 昵称输入区域 */
+.nicknames-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20rpx 0;
+  gap: 30rpx; /* 与头像区域保持一致的间距 */
+  margin-left: 30rpx; /* 与头像区域保持一致的偏移 */
+}
+
+.nickname-input {
+  width: 160rpx;
+  height: 60rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #666;
+  padding: 0 15rpx;
+  box-sizing: border-box;
+}
+
+.tips-section {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20rpx;
+  padding: 12rpx 20rpx;
+  margin-bottom: 25rpx;
+  text-align: center;
+}
+
+.tips-text {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 推送订阅区域 */
+.push-subscribe-section {
+  margin-bottom: 25rpx;
+}
+
+.subscribe-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 25rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.subscribe-content {
+  flex: 1;
+}
+
+.subscribe-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.subscribe-desc {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+}
+
+.subscribe-btn {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 25rpx;
+  padding: 15rpx 30rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  margin: 0;
+  min-width: 120rpx;
+}
+
+.subscribe-btn.subscribed {
+  background: #999;
+}
+
+.subscribe-btn::after {
+  border: none;
+}
+
+/* 位置信息区域 */
+.location-section {
+  margin-bottom: 25rpx;
+}
+
+.location-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 25rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.location-content {
+  flex: 1;
+}
+
+.location-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.location-info {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.location-detail {
+  font-size: 22rpx;
+  color: #999;
+  display: block;
+}
+
+.location-buttons {
+  display: flex;
+  gap: 10rpx;
+  flex-direction: column;
+}
+
+.location-btn {
+  background: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 25rpx;
+  padding: 15rpx 30rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  margin: 0;
+  min-width: 120rpx;
+}
+
+.select-city-btn {
+  background: #ff6b6b;
+}
+
+.location-btn:disabled {
+  background: #ccc;
+  color: #999;
+}
+
+.location-btn::after {
+  border: none;
+}
+
+/* 天气信息区域 */
+.weather-section {
+  margin-bottom: 25rpx;
+}
+
+.weather-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 25rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.weather-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.weather-refresh-btn {
+  background: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 15rpx;
+  padding: 8rpx 20rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+  margin: 0;
+}
+
+.weather-refresh-btn:disabled {
+  background: #ccc;
+  color: #999;
+}
+
+.weather-refresh-btn::after {
+  border: none;
+}
+
+.weather-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.weather-icon {
+  font-size: 60rpx;
+  line-height: 1;
+}
+
+.weather-temp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.weather-temp {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.weather-condition {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.weather-details {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.weather-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.detail-label {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.detail-value {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.weather-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx 0;
+}
+
+.loading-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+
+
+/* SendKey输入弹窗 */
+.sendkey-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20rpx;
+  width: 80%;
+  max-width: 600rpx;
+  padding: 40rpx;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+  padding: 10rpx;
+}
+
+.modal-body {
+  margin-bottom: 30rpx;
+}
+
+.input-label {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.sendkey-input {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  margin-bottom: 15rpx;
+  box-sizing: border-box;
+}
+
+.input-tip {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.modal-btn.cancel {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.modal-btn.confirm {
+  background: #ff69b4;
+  color: white;
+}
+
+.modal-btn::after {
+  border: none;
+}
+
+/* 测试按钮区域 */
+.test-section {
+  margin-top: 20rpx;
+  display: flex;
+  gap: 15rpx;
+}
+
+.test-push-btn,
+.test-api-btn {
+  flex: 1;
+  height: 80rpx;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.test-api-btn {
+  background: #ff6b6b;
+}
+
+.diagnose-api-btn {
+  background: #28a745;
+}
+
+.test-push-btn::after {
+  border: none;
+}
+
+/* 城市设置弹窗 */
+.city-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.city-input {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  margin-bottom: 15rpx;
+  box-sizing: border-box;
+}
+
+.plus-icon {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+  margin: 0; /* 移除margin，使用gap控制间距 */
+  flex-shrink: 0; /* 防止压缩 */
+}
+
+.love-days {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  color: #fff;
+  margin-bottom: 40rpx;
+}
+
+.days-text {
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.days-number {
+  font-size: 72rpx;
+  font-weight: bold;
+  color: #6a4c93;
+  margin: 0 10rpx;
+}
+
+.days-unit {
+  font-size: 28rpx;
+}
+
+/* 功能卡片区域 */
+.features-section {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.feature-large {
+  flex: 1;
+  height: 320rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  font-size: 80rpx;
+  text-align: right;
+}
+
+.feature-content {
+  color: #fff;
+}
+
+.feature-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+  line-height: 1.3;
+}
+
+.feature-subtitle {
+  font-size: 24rpx;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.features-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.feature-small {
+  height: 150rpx;
+  border-radius: 20rpx;
+  padding: 25rpx;
+  color: #fff;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.small-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.small-subtitle {
+  font-size: 22rpx;
+  opacity: 0.9;
+  line-height: 1.3;
+}
+
+/* 底部卡片 */
+.features-bottom {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 40rpx; /* 增加底部间距 */
+}
+
+.feature-bottom {
+  flex: 1;
+  height: 140rpx;
+  border-radius: 20rpx;
+  padding: 25rpx;
+  color: #fff;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+  margin-bottom: 0; /* 确保没有额外的margin */
+}
+
+.bottom-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.bottom-subtitle {
+  font-size: 22rpx;
+  opacity: 0.9;
+  line-height: 1.3;
+}

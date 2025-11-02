@@ -1,0 +1,49 @@
+<!--countdown.wxml-->
+<view class="page-container">
+  <!-- 背景图片 -->
+  <image class="background-image" src="/images/background.jpg" mode="aspectFill"></image>
+  
+  <view class="container">
+    <!-- 自定义导航栏 -->
+    <view class="custom-nav">
+      <view class="back-button" bindtap="goBack">
+        <text class="back-icon">←</text>
+      </view>
+      <text class="nav-title">倒数日</text>
+      <view class="nav-placeholder"></view>
+    </view>
+
+    <!-- 主要内容区域 -->
+    <view class="content">
+      <!-- 在一起天数卡片 -->
+      <view class="love-days-card">
+        <view class="love-days-left">
+          <text class="love-days-text">在一起已经</text>
+          <text class="start-date">起始日: {{startDate}}</text>
+        </view>
+        <view class="love-days-right">
+          <text class="love-days-number">{{loveDays}}</text>
+          <view class="days-unit">Days</view>
+        </view>
+      </view>
+
+      <!-- 倒数日事件列表 -->
+      <view class="countdown-list">
+        <view class="countdown-item" wx:for="{{countdownEvents}}" wx:key="id">
+          <view class="countdown-left">
+            <text class="event-name">{{item.name}}还有</text>
+          </view>
+          <view class="countdown-right">
+            <view class="countdown-days">{{item.days}} 天</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部添加按钮 -->
+    <view class="bottom-button" bindtap="addNewEvent">
+      <text class="add-icon">+</text>
+      <text class="add-text">添加新事件</text>
+    </view>
+  </view>
+</view>
